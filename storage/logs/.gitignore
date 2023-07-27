@@ -1,4 +1,4 @@
-*
-!.gitignore
+/storage/*.key
 /vendor
 .env
+.env.production
