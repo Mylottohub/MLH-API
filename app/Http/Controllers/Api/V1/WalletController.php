@@ -49,6 +49,7 @@ class WalletController extends Controller
         $wallet = User::where('id', $user_id)->first();
      //   Log::info('user: ' . json_encode($wallet));
       //  Log::info('amount: ' . json_encode( $amount));
+      //  Log::info('amount: ' . json_encode( $amount));
         if ($wallet) {
             $wallet->wallet += $amount;
             $wallet->save();
