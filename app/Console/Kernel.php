@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('app:win-calculation')->everyThirtyMinutes() ->sendOutputTo("wincalculation-output.log");
+        $schedule->command('app:green-lotto-result')->everyThirtyMinutes() ->sendOutputTo("greenlotto-output.log");
     }
 
     /**

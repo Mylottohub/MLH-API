@@ -27,7 +27,8 @@ class ForgotValidationRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['string', 'email'],
+            'email' => ['somtimes', 'string', 'email'],
+            'user_details' => ['sometimes', 'string']
         ];
     }
 

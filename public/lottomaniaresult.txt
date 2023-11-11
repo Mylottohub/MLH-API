@@ -1,0 +1,31 @@
+Array
+(
+    [messageId] => mlh_16979261953829
+    [timeStamp] => 1697926195
+    [sessionId] => rGxdt1SIlvy9NARJNkkuOoZWvoAe6862hdOCfjdB
+    [playerId] => 5
+    [tc] => 2000
+    [nofP] => 1
+    [pli] => Array
+        (
+            [0] => Array
+                (
+                    [dc] => 0
+                    [sli] => Array
+                        (
+                            [0] => 6
+                            [1] => 7
+                        )
+
+                    [did] => 0
+                    [pid] => 1
+                    [nofcomb] => 1
+                    [nofsel] => 2
+                    [sa] => 2000
+                    [gid] => 300
+                    [bid] => 31
+                )
+
+        )
+
+)

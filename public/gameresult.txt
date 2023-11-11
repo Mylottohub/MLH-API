@@ -1,0 +1,7 @@
+
+""
+null
+{"headers":{},"original":{"gameresult":null},"exception":null}
+{"headers":{},"original":{"gameresult":[]},"exception":null}
+{"headers":{},"original":{"gameresult":{}},"exception":null}
+{"success":false,"errors":{"AgentID":["This field is required."]}}

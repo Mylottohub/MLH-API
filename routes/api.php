@@ -30,20 +30,47 @@ Route::namespace('App\Http\Controllers\Api\V1')->prefix('v1')->group( function (
      // Payments
      Route::get('/testmail/{user}', [AuthController::class, 'testmail']);
 
+     /*** This API Endpoints  Are Consumed By Opay (OPAP POS and OPAY App),  Tingtel and first Money  */
+     Route::post('/get_token', 'PaymentController@getToken' );
+     Route::post('/account_lookup', 'PaymentController@accountLookup' );
+     Route::post('/place_order', 'PaymentController@placeOrder' );
+     Route::post('/query_transaction', 'PaymentController@initializeTransaction' );
+     Route::post('/query_transaction_id', 'PaymentController@initializeTransaction' );
+     Route::post('/query_user_detail', 'PaymentController@initializeTransaction' );
+
+
+     // Games
+     Route::post('/get-games', 'GamesController@getGames' );
+
     Route::middleware(['auth:api'])->group(function () {
 
         //User
         Route::apiResource('users', UserController::class);
         Route::post('users/photo/{user}', [UserController::class, 'uploadCustomerPhoto']);
         Route::post('users/getuser', [UserController::class, 'getUser']);
-        Route::get('/get-user/{id}', 'UserController@show' );
+        Route::get('/get-user/{id}', 'UserController@show');
         
     
        
 
         //Payments
         Route::post('/payment-initialize', 'PaymentController@initializeTransaction' );
-        Route::post('payments/reference', 'PaymentChannelController@getPaymentDetails');
+        Route::post('payments/reference', 'PaymentController@getPaymentDetails');
+        Route::post('payments/withdraw-request', 'PaymentController@withrawRequest');
+
+        
+
+         //Wallet
+         Route::get('user/wallet/{user_id}', 'WalletController@getWalletBalance' );
+         Route::get('user/wallet-bonus/{user_id}', 'WalletController@getWalletBonus');
+         Route::get('user/bonus/wallet/{user_id}', 'UserController@getWallets');
+ 
+
+        //Games
+       
+        Route::post('/play-games', 'GamesController@playGames' );
+        Route::post('/save-play-activity', 'GamesController@saveGameActivity' );
+       // Route::post('payments/reference', 'PaymentChannelController@getPaymentDetails');
 
         
     });

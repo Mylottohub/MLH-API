@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 //use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
 
 class AuthController extends Controller
@@ -28,6 +29,7 @@ class AuthController extends Controller
     {
 
         $user = $this->getUser($request);
+        
 
         if ($user == null) {
             return response()->json(['error' => 'User not found'], 400);
@@ -105,10 +107,12 @@ class AuthController extends Controller
 
     }
 
-    public function forgot(ForgotValidationRequest $request)
+    public function forgot(Request $request)
     {
 
+       
         $email = $this->getUser($request)->email ?? null;
+        
 
         if ($email == null) {
             return response([
@@ -153,6 +157,7 @@ class AuthController extends Controller
             ], 400);
         }
         $user = $this->getUser($request);
+    
        
         if ($user->confirmed == 0){
             if ($user){
@@ -177,24 +182,31 @@ class AuthController extends Controller
 
         }
         
-        
-        
-       
-
-       
+           
     }
 
-    public function reset(ResetValidationRequest $request)
+    public function reset(Request $request)
     {
+
+        $passwordReset = DB::table('password_reset_tokens')->where('email', $request->email)->first();
+
+        if ($passwordReset != null) {
+            return response([
+                'message' => 'Action is not allowed. Verify your otp',
+            ], 400);
+        }
 
         $user = User::where('email', $request->email)->first();
 
         $user->password = Hash::make($request->password);
 
-        return response([
+        $user->save();
 
-            'message' => $user->save(),
-        ]);
+        return response([
+            'message' => 'Password updated Successfully',
+        ], 200);
+
+        
 
     }
 
@@ -203,9 +215,9 @@ class AuthController extends Controller
         // dd($request->file('photo'));
 
         $search_email= $request->user_details ?? $request->email;
-        $search_username= ($request->user_details ?? $request->username) ?? $search_email;
+        $search_username= ($request->email ?? $request->username) ?? $search_email;
 
-      // return  $search_email . " -" . $search_username;
+      //return  $search_email . " -" . $search_username;
 
           return User::where(function($query) use ($search_email, $search_username) {
             $query->where('email', $search_email)

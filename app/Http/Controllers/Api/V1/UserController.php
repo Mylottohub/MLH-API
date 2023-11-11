@@ -41,9 +41,25 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        return $user;
+        $user = User::where('id', $id)->first();
+        return response()->json($user, 200);
+    }
+
+    public function getWallets($id)
+    {
+        $user = User::where('id', $id)->first();
+        return response()->json(
+            ["deposit_wallet" => $user->wallet,
+             "winning_wallet" => $user->wwallet ?? 0,
+             "bonus_wallet" => $user->bwallet ?? 0,
+             "green_lotto_bonus_wallet" => $user->gl_bwallet ?? 0,
+             "lotto_nigeria_bonus_wallet" => $user->sl_bwallet ?? 0,
+             "lottomania_bonus_wallet" => $user->lm_bwallet ?? 0,
+             "590_bonus_wallet" => $user->gh_bwallet ?? 0,
+          
+        ], 200);
     }
 
     
@@ -99,6 +115,7 @@ class UserController extends Controller
 
     public function getUser(Request $request)
     {
+        
 
         $user = User::where('email', $request->email)->first();
 
